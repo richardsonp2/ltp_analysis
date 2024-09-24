@@ -1,5 +1,5 @@
 Package: LTP.analysis
-Title: Produces Diagnostic and Results Plots for LTP Data.
+Title: Produces diagnostic and results plots for ltp data.
 Version: 0.0.0.9000
 Authors@R: 
     person("Peter", "Richardson", , "richardsonp2@cardiff.ac.uk", role = c("aut", "cre"),

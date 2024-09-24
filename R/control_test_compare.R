@@ -56,7 +56,7 @@ generate_full_bin_figure_function <- function(dataset, bin_start = 20) {
   # Title should show between which timepoints.
   generated_title <- generate_bin_title(binstart = bin_start, binend = bin_end)
   
-  filterfive <- filter_five_bin(dataset, 20)
+  filterfive <- filter_five_bin(dataset, bin_start = bin_start)
   means_from_bins <- generate_means_from_bins(filterfive)
   
   fiveplot <- plot_fivemin_function(means_from_bins, generated_title)
