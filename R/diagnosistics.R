@@ -3,6 +3,7 @@ library(cowplot)
 library(rlang)
 library(ggpubr)
 library(officer)
+library(devtools)
 
 source("./R/BaseLTPFunctions.R")
 # Some color variables
@@ -320,11 +321,14 @@ main_run <- function(dataset, individual_value, ppt){
 #' @return The updated PowerPoint object if successful, or the original PowerPoint object if an error occurs.
 #' @export
 print_try_function <-function (ppt,cell_id,dataframe){
-  if (identical(dataframe, df_het)){
+  dataframe_name <- deparse(substitute(dataframe))
+  
+  if (grepl("^df_het", dataframe_name)) {
     print("HET DATASET")
-  }
-  else if (identical(dataframe, df_wt)){
+  } else if (grepl("^df_wt", dataframe_name)) {
     print("WT DATASET")
+  } else {
+    print("Unknown dataset")
   }
   
   print(paste("Processing cell_id:", cell_id))
