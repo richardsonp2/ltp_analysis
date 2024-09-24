@@ -25,22 +25,22 @@ ppt <- read_pptx()
 #' @return A dataframe with standardized column names and appropriately converted data types (factors and numeric).
 #' @export
 pre_process_datasets <- function(dataset){
-  # Converts columns that need to be factor to factor, numeric to numeric. 
+  # Converts columns that need to be factor to factor, numeric to numeric.
   # Tidies up the names of the columns.
-  
+
   current_names <- names(dataset)
   standardized_names <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num", "Time", "Test", "PPR_test", "Control", "PPR_control", "Rs", "Rin", "DC", "animal_cell_id")
   names(dataset) <- standardized_names
-  
+
   factor_cols <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num")
   num_cols <- c("Time", "Test", "PPR_test", "Control", "PPR_control", "Rs", "Rin", "DC")
-  dataset[factor_cols] <- lapply(dataset[factor_cols], factor)  
-  dataset[num_cols] <- lapply(dataset[num_cols], as.numeric)  
+  dataset[factor_cols] <- lapply(dataset[factor_cols], factor)
+  dataset[num_cols] <- lapply(dataset[num_cols], as.numeric)
   return (dataset)
 }
 
-#' The whole dataset is preprocessed here. Then the filtered dataset is filtered according to the cells I pick 
-#' after manually choosing the right ones. 
+#' The whole dataset is preprocessed here. Then the filtered dataset is filtered according to the cells I pick
+#' after manually choosing the right ones.
 # Generate individual diagnostic plots
 
 #' Title of the function
@@ -51,7 +51,7 @@ pre_process_datasets <- function(dataset){
 #' @return What the function returns.
 #' @export
 make_diagnostic_plot <- function(dataset,parameter){
-  
+
   title <- switch(parameter,
                   "Rs" = "Rs (\U2126)",
                   "Rin" = "Rin (\U2126)",
@@ -61,40 +61,40 @@ make_diagnostic_plot <- function(dataset,parameter){
     geom_point()+
     scale_x_continuous(name = "Time (min)", limits = c(-10, 40)) +
     scale_y_continuous(name = title)
-  
+
   return(diag_plot)
 }
 
 #' Generate a title string based on dataset columns
 #'
-#' This function generates a descriptive title string using specific columns 
-#' from a dataset. The title is constructed using the "Key", "Sex", "GT", 
-#' "animal_id", and "cell_num" columns. It checks if the required columns are 
+#' This function generates a descriptive title string using specific columns
+#' from a dataset. The title is constructed using the "Key", "Sex", "GT",
+#' "animal_id", and "cell_num" columns. It checks if the required columns are
 #' present in the dataset and returns a formatted string for further use.
 #'
-#' @param dataset A dataframe containing the data with columns "Key", "Sex", 
-#' "GT", "animal_id", and "cell_num". The function expects these columns to 
+#' @param dataset A dataframe containing the data with columns "Key", "Sex",
+#' "GT", "animal_id", and "cell_num". The function expects these columns to
 #' exist and will throw an error if any are missing.
-#' @return A string combining the animal ID, cell number, and key details 
+#' @return A string combining the animal ID, cell number, and key details
 #' formatted as "Animal_ID_<animal_id>_Cell_Number_<cell_num>_<key>_<sex>_<GT>".
 #' @export
 generate_title <- function(dataset) {
   # Print the dataset structure
   # print("Dataset structure in generate_title:")
   # print(str(dataset))
-  
+
   # Check for required columns
   required_columns <- c("Key", "Sex", "GT", "animal_id", "cell_num")
   missing_columns <- setdiff(required_columns, names(dataset))
   if (length(missing_columns) > 0) {
     stop(paste("Dataset is missing required columns:", paste(missing_columns, collapse = ", ")))
   }
-  
+
   # Get the first row, all rows for the title will be the same thing
   animal_title <- dataset %>% filter(row_number() == 1)
   #print("First row of dataset:")
   #print(animal_title)
-  
+
   # Key sex genotype string for title
   title_string <- paste(
     trimws(animal_title$Key),
@@ -105,13 +105,13 @@ generate_title <- function(dataset) {
   # String for the animal id and cell number
   animal_id <- animal_title$animal_id
   cell_num <- animal_title$cell_num
-  
+
   full_title <- paste(
     "Animal_ID_", animal_id, "_",
     "Cell_Number_", cell_num,
     "_", title_string
   )
-  
+
   return(full_title)
 }
 
@@ -126,7 +126,7 @@ make_diagnostic_grid <- function(dataset) {
   rs_figure <- make_diagnostic_plot(dataset, "Rs")
   Rin_figure <- make_diagnostic_plot(dataset, "Rin")
   DC_figure <- make_diagnostic_plot(dataset, "DC")
-  
+
   diagnostic_grid <- gridExtra::grid.arrange(rs_figure, Rin_figure, DC_figure, nrow = 1, ncol = 3)
   return(diagnostic_grid)
 }
@@ -141,15 +141,15 @@ make_diagnostic_grid <- function(dataset) {
 run_main_diagnostic <-function (dataset){
   title_string <- generate_title(dataset)
   diag_plots <- make_diagnostic_grid(dataset)
-  
+
   # Create a ggplot object for the title
   title_plot <- ggplot() +
     annotate("text", x = 0.5, y = 0.5, label = title_string, size = 6, fontface = 'bold', hjust = 0.5, vjust = 0.5) +
     theme_void()  # Remove all background and axes
-  
+
   # Combine the title and the plot grid
   diagnositics_plots <- plot_grid(title_plot, diag_plots, ncol = 1, rel_heights = c(0.1, 1))
-  
+
 }
 
 #' Reshape dataset into long format for test and control pathways
@@ -162,21 +162,21 @@ run_main_diagnostic <-function (dataset){
 #' @export
 longform_test_control <- function(dataset, is_mean = FALSE){
   if (is_mean == FALSE){
-    longer_ds <- dataset %>% 
-      pivot_longer(cols = c("Test","Control"),names_to = "Pathway", values_to = "normalised_amplitude") %>% 
+    longer_ds <- dataset %>%
+      pivot_longer(cols = c("Test","Control"),names_to = "Pathway", values_to = "normalised_amplitude") %>%
       mutate(Pathway = factor(Pathway))
   }
   else if (is_mean == TRUE){
     longer_ds_sem <- dataset %>%
       pivot_longer(cols = c("sem_test", "sem_control"),
                    names_to = "Pathway",
-                   values_to = "sem_amplitude") %>% 
+                   values_to = "sem_amplitude") %>%
       select(sem_amplitude )
-    
+
     longer_ds_m <- dataset %>%
-      pivot_longer(cols = c("Test","Control"),names_to = "Pathway", values_to = "normalised_amplitude")%>% 
+      pivot_longer(cols = c("Test","Control"),names_to = "Pathway", values_to = "normalised_amplitude")%>%
       select(Time, Pathway, normalised_amplitude)
-    
+
     longer_ds <- bind_cols(longer_ds_m, longer_ds_sem)
   }
   return (longer_ds)
@@ -225,11 +225,11 @@ theme_blank_background <- function(base_size = 12, base_family = "") {
 #' @export
 make_mean_sem_dataset <- function(dataset){
   dataset$animal_id <- as.factor(dataset$animal_id)
-  
-  ds_mean_sem <- dataset %>% 
-    filter(Time <= 30 & Time >= -5) %>% 
-    group_by(Time, animal_cell_id) %>% 
-    summarise(mean_test = mean(Test), mean_control = mean(Control))%>% 
+
+  ds_mean_sem <- dataset %>%
+    filter(Time <= 35 & Time >= -10) %>%
+    group_by(Time, animal_cell_id) %>%
+    summarise(mean_test = mean(Test), mean_control = mean(Control))%>%
     ungroup() %>%
     group_by(Time)%>%
     summarise(
@@ -239,7 +239,7 @@ make_mean_sem_dataset <- function(dataset){
       sem_control = sd(mean_control) / sqrt(n())
     )
   return (ds_mean_sem)
-  
+
 }
 
 #' Create a single diagnostic plot for test and control pathways
@@ -260,7 +260,7 @@ make_test_control_plot_single <- function(dataset){
     scale_color_manual(name = "Pathway", values = test_control_colors) +
     theme_blank_background() +
     geom_text(x = 0, y = 3, label = "\u2193", size = 8, color = "black")
-  
+
   return(test_control_plot)
 }
 
@@ -276,38 +276,38 @@ make_test_control_plot_single <- function(dataset){
 #' @return The updated PowerPoint object with the new slide containing the title and combined diagnostic plots.
 #' @export
 main_run <- function(dataset, individual_value, ppt){
-  
-  filtered_dataset <- dataset %>% 
+
+  filtered_dataset <- dataset %>%
     filter(animal_cell_id == individual_value)
-  
+
   print(names(filtered_dataset))
-  
+
   pre_prcessed_dataset <- pre_process_datasets(filtered_dataset)
-  
+
   title_string <- generate_title(pre_prcessed_dataset)
   diagnostic_figure_grid <- run_main_diagnostic(pre_prcessed_dataset)
-  
+
   outlier_cleaned_dataset <- replace_outliers(pre_prcessed_dataset)
   longform_ds <- longform_test_control(outlier_cleaned_dataset)
   test_control_figure <- make_test_control_plot_single(longform_ds)
   combined_plots <- ggarrange(diagnostic_figure_grid, test_control_figure, ncol = 1, nrow = 2)
-  
+
   #Save the plot temporarily
   temp_png <- tempfile(fileext = ".png")
   ggsave(temp_png, plot = combined_plots, width = 8, height = 6)
-  
+
   # Format the title string
   title_fpar <- fpar(
     ftext(title_string, fp_text(font.size = 10, bold = TRUE))
   )
-  
-  
+
+
   # Add a new slide and insert the image
-  ppt <- ppt %>% 
+  ppt <- ppt %>%
     add_slide(layout = "Title and Content", master = "Office Theme") %>%
     ph_with(value = title_fpar, location = ph_location_type(type = "title")) %>%
     ph_with(value = external_img(temp_png, height = 5.5, width = 7.5), location = ph_location_type(type = "body"))
-  
+
   return(ppt)
 }
 
@@ -322,7 +322,7 @@ main_run <- function(dataset, individual_value, ppt){
 #' @export
 print_try_function <-function (ppt,cell_id,dataframe){
   dataframe_name <- deparse(substitute(dataframe))
-  
+
   if (grepl("^df_het", dataframe_name)) {
     print("HET DATASET")
   } else if (grepl("^df_wt", dataframe_name)) {
@@ -330,7 +330,7 @@ print_try_function <-function (ppt,cell_id,dataframe){
   } else {
     print("Unknown dataset")
   }
-  
+
   print(paste("Processing cell_id:", cell_id))
   tryCatch(
     main_run(dataframe, cell_id, ppt),
