@@ -1,5 +1,13 @@
 source("./R/BaseLTPFunctions.R")
 
+
+#' Main Combined Run
+#'
+#' This function processes a dataset by cleaning outliers, calculating mean and SEM values, transforming the dataset into long-form format, and generating a plot for test and control pathways.
+#'
+#' @param dataset A dataframe containing data for test and control pathways.
+#' @return A ggplot object visualizing the mean and SEM for test and control pathways.
+#' @export
 main_combined_run <- function(dataset){
   cleaned_outliers <- replace_outliers(dataset)
   mean_sem_dataset_wide <- make_mean_sem_dataset(cleaned_outliers)
@@ -8,14 +16,31 @@ main_combined_run <- function(dataset){
 
   return(test_control_plot_means)
 }
+print("main combined function opened")
+
 
 # Bar chart figures
-
+#' Generate Bin Title
+#'
+#' This function generates a title based on the start and end of a binning range.
+#'
+#' @param binstart The starting value of the bin.
+#' @param binend The ending value of the bin.
+#' @return A string representing the title for the bin range.
+#' @export
 generate_bin_title <- function(binstart, binend) {
   title <- paste0(binstart, "-", binend)
   return(title)
 }
 
+#' Filter Dataset by Time Range
+#'
+#' This function filters a dataset to include only rows within a 5-minute bin starting from the provided bin start time.
+#'
+#' @param dataset A dataframe containing time-series data.
+#' @param bin_start The start of the 5-minute time range.
+#' @return A filtered dataframe containing data within the specified time range.
+#' @export
 filter_five_bin <- function(dataset, bin_start) {
   bin_end <- bin_start + 5
   filtered <- dataset %>%
@@ -23,6 +48,13 @@ filter_five_bin <- function(dataset, bin_start) {
   return(filtered)
 }
 
+#' Generate Mean Values from Bins
+#'
+#' This function calculates the mean values for test and control pathways, grouping by animal or cell ID, and transforms the dataset into long format.
+#'
+#' @param dataset A dataframe containing test and control pathway data.
+#' @return A long-form dataframe containing the mean values for test and control pathways.
+#' @export
 generate_means_from_bins <- function(dataset){
   dataset <- dataset %>%
     group_by(animal_cell_id) %>%
@@ -31,6 +63,15 @@ generate_means_from_bins <- function(dataset){
   return(dataset)
 }
 
+#' Plot 5-Minute Bin Data
+#'
+#' This function generates a box plot and jitter plot to visualize normalized amplitudes for test and control pathways within a 5-minute bin.
+#'
+#' @param dataset A dataframe containing binned data.
+#' @param title The title for the plot.
+#' @param legend Logical, whether to include the legend in the plot. Defaults to TRUE.
+#' @return A ggplot object visualizing the binned data.
+#' @export
 plot_fivemin_function <- function(dataset, title, legend = TRUE) {
 
   plot_5min <- ggplot(dataset, aes(x = Pathway, y = normalised_amplitude, color = Pathway)) +
@@ -49,7 +90,15 @@ plot_fivemin_function <- function(dataset, title, legend = TRUE) {
   return(plot_5min)
 }
 
-
+#' Generate Full Bin Plot
+#'
+#' This function generates a full plot for a specified time bin by filtering the dataset and generating a plot using the 5-minute bin plotting function.
+#'
+#' @param dataset A dataframe containing time-series data.
+#' @param bin_start The start of the time bin for plotting. Defaults to 20.
+#' @param legend Logical, whether to include the legend in the plot. Defaults to TRUE.
+#' @return A ggplot object visualizing the data within the specified bin.
+#' @export
 generate_full_bin_figure_function <- function(dataset, bin_start = 20, legend = TRUE) {
   bin_end <- bin_start + 5
 
@@ -66,6 +115,14 @@ generate_full_bin_figure_function <- function(dataset, bin_start = 20, legend = 
 }
 
 
+#' Combine Longitudinal and Bin Plots
+#'
+#' This function arranges a longitudinal plot and a bin plot side by side for comparison.
+#'
+#' @param longplot A ggplot object representing the longitudinal plot.
+#' @param binplot A ggplot object representing the bin plot.
+#' @return A combined plot object with the longitudinal and bin plots side by side.
+#' @export
 longitudinal_and_binplot <- function(longplot, binplot){
   plot <- ggarrange(longplot, binplot, ncol = 2, nrow = 1)
   return(plot)
