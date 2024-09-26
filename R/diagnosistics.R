@@ -340,9 +340,3 @@ print_try_function <-function (ppt,cell_id,dataframe){
     })
 }
 
-#HET
-# HET dataset
-# ppt <- Reduce(function(ppt, cell_id) {
-#   print_try_function(ppt, cell_id, df_het)
-# }, unique_cells_vector_het, ppt)
-# print(ppt, target = "het_apamin_individual_cells_presentation.pptx")

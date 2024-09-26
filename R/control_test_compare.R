@@ -31,7 +31,7 @@ generate_means_from_bins <- function(dataset){
   return(dataset)
 }
 
-plot_fivemin_function <- function(dataset, title, is_combined = FALSE) {
+plot_fivemin_function <- function(dataset, title, legend = TRUE) {
 
   plot_5min <- ggplot(dataset, aes(x = Pathway, y = normalised_amplitude, color = Pathway)) +
     geom_boxplot() +
@@ -42,11 +42,15 @@ plot_fivemin_function <- function(dataset, title, is_combined = FALSE) {
     theme_bw() +
     labs(title = title)
 
+  if (legend == FALSE){
+    plot_5min <- plot_5min + theme(legend.position = "none")
+  }
+
   return(plot_5min)
 }
 
 
-generate_full_bin_figure_function <- function(dataset, bin_start = 20) {
+generate_full_bin_figure_function <- function(dataset, bin_start = 20, legend = TRUE) {
   bin_end <- bin_start + 5
 
   # Title should show between which timepoints.
@@ -55,7 +59,7 @@ generate_full_bin_figure_function <- function(dataset, bin_start = 20) {
   filterfive <- filter_five_bin(dataset, bin_start = bin_start)
   means_from_bins <- generate_means_from_bins(filterfive)
 
-  fiveplot <- plot_fivemin_function(means_from_bins, generated_title)
+  fiveplot <- plot_fivemin_function(means_from_bins, generated_title, legend = legend)
 
 
   return(fiveplot)

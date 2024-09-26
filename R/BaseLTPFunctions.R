@@ -1,3 +1,7 @@
+
+
+
+
 #' Create an error bar plot with mean and SEM for test and control pathways
 #'
 #' This function generates a plot with error bars to visualize the mean and standard error of the mean (SEM) for the "Test" and "Control" pathways over time.
@@ -9,7 +13,7 @@ make_test_control_plot <- function(dataset){
   # This function generates the error bar plot with the mean values and sd values
   test_control_plot <- ggplot(dataset, aes(x = Time, y = normalised_amplitude, color = Pathway))+
     geom_point() +
-    geom_errorbar(aes(ymin = normalised_amplitude - sem_amplitude, 
+    geom_errorbar(aes(ymin = normalised_amplitude - sem_amplitude,
                       ymax = normalised_amplitude + sem_amplitude,
                       color = Pathway),
                   width = 0.2) +
@@ -22,7 +26,7 @@ make_test_control_plot <- function(dataset){
     scale_color_manual(name = "Pathway", values = test_control_colors) +
     theme_blank_background() +
     geom_text(x = 0, y = 3, label = "\u2193", size = 8, color = "black")
-  
+
   return(test_control_plot)
 }
 
@@ -30,20 +34,20 @@ make_test_control_plot <- function(dataset){
 #'
 #' Description of what the function does.
 #'
-#' @param address The string address for the csv file. 
+#' @param address The string address for the csv file.
 #' @return A dataframe containing the 15 columns.
 #' @export
 read_csv_function <- function(address){
   # Sometimes the script seems to add a column of NA's at the end of the CSV, I will drop the column with those in. No other
   # columns have NA's so we should not loose any information.
   # However, there should be 14 columns at this stage, I will check for this in the function
-  
+
   df <- read.csv2(address, header = TRUE, sep = ",", stringsAsFactors = FALSE)
   df <- df[, colSums(is.na(df)) < nrow(df)]
-  
-  df <- df %>% 
+
+  df <- df %>%
     mutate(animal_cell_id = paste(animal_id, cell_num, sep = '_'))
-  
+
   # Check if the resulting data frame has exactly 14 columns
   if (ncol(df) == 15) {
     return(df)
@@ -62,7 +66,7 @@ read_csv_function <- function(address){
 #' @return A vector of unique `animal_cell_id` values from the dataset.
 #' @export
 find_unique_cells <- function(dataset){
-  
+
   unique_cells <- unique(dataset$animal_cell_id)
   unique_cells_vector <- as.vector(unique_cells)
 }
