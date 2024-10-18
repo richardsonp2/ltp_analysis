@@ -4,7 +4,11 @@
 \alias{make_test_control_plot}
 \title{Create an error bar plot with mean and SEM for test and control pathways}
 \usage{
-make_test_control_plot(dataset)
+make_test_control_plot(
+  dataset,
+  right_timepoint_max_limit = 35,
+  top_figure_height = 3
+)
 }
 \arguments{
 \item{dataset}{A dataframe containing mean and SEM values for "Test" and "Control" pathways.}
