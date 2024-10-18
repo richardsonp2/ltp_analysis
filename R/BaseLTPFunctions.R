@@ -1,3 +1,5 @@
+#' A test print function
+#' @export
 test_print_function <- function(){
   print("HELLO")
 }
