@@ -5,15 +5,13 @@
 #' @importFrom magrittr %>%
 #' @importFrom stats lm t.test sd
 #' @importFrom utils read.csv2
-#' @importFrom dplyr group_by summarise mutate select ungroup across
-#' @importFrom dplyr group_by summarise mutate select ungroup across
+#' @importFrom dplyr group_by summarise mutate select ungroup across row_number bind_cols n
 #' @importFrom tidyr pivot_longer
-#' @importFrom ggplot2 ggarrange
+#' @importFrom ggpubr ggarrange
+#' @importFrom tidyselect where
+#' @importFrom cowplot plot_grid
 #' @importFrom officer add_slide ph_with ph_location_type external_img fpar ftext fp_text
-
-#' @docType package
-#' @name mypackage
-NULL
+"_PACKAGE"
 
 # Suppress global variable warnings
 utils::globalVariables(c(

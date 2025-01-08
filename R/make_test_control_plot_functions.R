@@ -3,6 +3,8 @@
 #' This function generates a plot for diagnostic purposes using normalized amplitude values for "Test" and "Control" pathways over time.
 #'
 #' @param dataset A long-format dataframe containing "Test" and "Control" values for different time points.
+#' @param top_amplitude_limit The highest amplitude to plot up to. Higher than 3 will stretch the plot.
+#' @param right_timepoint_max_limit The furthest timepoint value from 0 to the right to plot on the figure.
 #' @return A ggplot object for visualizing test and control pathways.
 #' @export
 make_test_control_plot_single <- function(dataset, top_amplitude_limit = 3,right_timepoint_max_limit = 35){
@@ -28,6 +30,9 @@ make_test_control_plot_single <- function(dataset, top_amplitude_limit = 3,right
 #'
 #' @import ggplot2
 #' @param dataset A dataframe containing mean and SEM values for "Test" and "Control" pathways.
+#' @param right_timepoint_max_limit Numeric. The maximum x-axis limit for the time (in minutes).
+#'   Default is 35.
+#' @param top_figure_height The highest amplitude to plot up to. Higher than 3 will stretch the plot.
 #' @return A ggplot object for visualizing the mean and SEM for test and control pathways.
 #' @export
 #'

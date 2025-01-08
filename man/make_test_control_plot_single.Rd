@@ -12,6 +12,10 @@ make_test_control_plot_single(
 }
 \arguments{
 \item{dataset}{A long-format dataframe containing "Test" and "Control" values for different time points.}
+
+\item{top_amplitude_limit}{The highest amplitude to plot up to. Higher than 3 will stretch the plot.}
+
+\item{right_timepoint_max_limit}{The furthest timepoint value from 0 to the right to plot on the figure.}
 }
 \value{
 A ggplot object for visualizing test and control pathways.

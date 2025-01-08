@@ -12,6 +12,11 @@ make_test_control_plot(
 }
 \arguments{
 \item{dataset}{A dataframe containing mean and SEM values for "Test" and "Control" pathways.}
+
+\item{right_timepoint_max_limit}{Numeric. The maximum x-axis limit for the time (in minutes).
+Default is 35.}
+
+\item{top_figure_height}{The highest amplitude to plot up to. Higher than 3 will stretch the plot.}
 }
 \value{
 A ggplot object for visualizing the mean and SEM for test and control pathways.

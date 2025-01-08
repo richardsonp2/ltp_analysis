@@ -1,20 +1,21 @@
-Package: LTP.analysis
+Package: ltppackage
 Title: Produces diagnostic and results plots for ltp data
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: 
     person("Peter", "Richardson", , "richardsonp2@cardiff.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: A package that produces diagnostic and results plots for long-term potentiation (LTP) data,
              providing tools for statistical analysis and visualisation.
 License: MIT + file LICENSE
-Imports: 
+Imports:
     tidyr,
+    gridExtra,
     ggplot2,
     magrittr,
     stats,
-    cowplot,
-    rlang,
     ggpubr,
+    tidyselect,
+    cowplot,
     officer,
     dplyr
 Encoding: UTF-8
