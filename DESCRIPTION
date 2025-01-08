@@ -8,15 +8,15 @@ Description: A package that produces diagnostic and results plots for long-term 
              providing tools for statistical analysis and visualisation.
 License: MIT + file LICENSE
 Imports: 
-  tidyverse,
-  ggplot2,
-  dplyr,
-  magrittr,
-  stats,
-  cowplot,
-  rlang,
-  ggpubr,
-  officer
+    tidyverse,
+    ggplot2,
+    magrittr,
+    stats,
+    cowplot,
+    rlang,
+    ggpubr,
+    officer,
+    dplyr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2.9000
