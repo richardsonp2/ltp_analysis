@@ -8,7 +8,7 @@ Description: A package that produces diagnostic and results plots for long-term 
              providing tools for statistical analysis and visualisation.
 License: MIT + file LICENSE
 Imports: 
-    tidyverse,
+    tidyr,
     ggplot2,
     magrittr,
     stats,
