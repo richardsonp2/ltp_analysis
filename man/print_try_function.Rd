@@ -11,11 +11,11 @@ print_try_function(ppt, cell_id, dataframe)
 
 \item{cell_id}{The identifier for the specific cell or individual being processed.}
 
-\item{dataframe}{The dataset being processed, which could be "df_het" or "df_wt".}
+\item{dataframe}{The dataset being processed, which will be either a HET or WT dataset.}
 }
 \value{
 The updated PowerPoint object if successful, or the original PowerPoint object if an error occurs.
 }
 \description{
-This function attempts to generate and insert slides into a PowerPoint presentation based on a specific \code{cell_id} and a given dataset. It checks if the dataset is "df_het" or "df_wt", prints a message about the dataset being processed, and handles errors during slide generation without crashing the entire process. If an error occurs, it logs the error and returns the PowerPoint object unchanged.
+This function attempts to generate and insert slides into a PowerPoint presentation based on a specific \code{cell_id} and a given dataset. It checks if the dataset contains het or wt and prints a message about the dataset being processed. The function handles errors during slide generation without crashing the entire process. If an error occurs, it logs the error and returns the PowerPoint object unchanged.
 }

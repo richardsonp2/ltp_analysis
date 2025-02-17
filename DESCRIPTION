@@ -1,6 +1,6 @@
 Package: ltppackage
 Title: Produces diagnostic and results plots for ltp data
-Version: 0.0.1.9002
+Version: 0.0.1.9003
 Authors@R: 
     person("Peter", "Richardson", , "richardsonp2@cardiff.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))

@@ -4,7 +4,7 @@
 #'
 #' @param ppt A PowerPoint object created using the `officer` package, to which new slides will be added.
 #' @param cell_id The identifier for the specific cell or individual being processed.
-#' @param dataframe The dataset being processed, which could be "df_het" or "df_wt".
+#' @param dataframe The dataset being processed, which will be either a HET or WT dataset.
 #' @return The updated PowerPoint object if successful, or the original PowerPoint object if an error occurs.
 #' @export
 print_try_function <-function (ppt,cell_id,dataframe){
