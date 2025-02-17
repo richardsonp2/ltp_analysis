@@ -17,5 +17,5 @@
 utils::globalVariables(c(
   "Time", "animal_cell_id", "Test", "Control", "Pathway",
   "normalised_amplitude", "sem_amplitude", "test_control_colors",
-  "mean_test", "mean_control", "top_figure_limit", "animal_id", "cell_num"
+  "mean_test", "mean_control", "animal_id", "cell_num"
 ))
