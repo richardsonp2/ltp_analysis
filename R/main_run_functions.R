@@ -31,12 +31,12 @@ main_run <- function(dataset, individual_value, ppt){
 
   print(names(filtered_dataset))
 
-  pre_prcessed_dataset <- pre_process_datasets(filtered_dataset)
+  pre_processed_dataset <- pre_process_datasets(filtered_dataset)
 
-  title_string <- generate_title(pre_prcessed_dataset)
-  diagnostic_figure_grid <- run_main_diagnostic(pre_prcessed_dataset)
+  title_string <- generate_title(pre_processed_dataset)
+  diagnostic_figure_grid <- run_main_diagnostic(pre_processed_dataset)
 
-  outlier_cleaned_dataset <- replace_outliers(pre_prcessed_dataset)
+  outlier_cleaned_dataset <- replace_outliers(pre_processed_dataset)
   longform_ds <- longform_test_control(outlier_cleaned_dataset)
   test_control_figure <- make_test_control_plot_single(longform_ds)
   combined_plots <- ggarrange(diagnostic_figure_grid, test_control_figure, ncol = 1, nrow = 2)

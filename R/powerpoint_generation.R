@@ -10,9 +10,9 @@
 print_try_function <-function (ppt,cell_id,dataframe){
   dataframe_name <- deparse(substitute(dataframe))
 
-  if (grepl("^df_het", dataframe_name)) {
+  if (grepl("het", dataframe_name, ignore.case = TRUE)) {
     print("HET DATASET")
-  } else if (grepl("^df_wt", dataframe_name)) {
+  } else if (grepl("wt", dataframe_name, ignore.case = TRUE)) {
     print("WT DATASET")
   } else {
     print("Unknown dataset")

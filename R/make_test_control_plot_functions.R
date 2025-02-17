@@ -7,7 +7,7 @@
 #' @param right_timepoint_max_limit The furthest timepoint value from 0 to the right to plot on the figure.
 #' @return A ggplot object for visualizing test and control pathways.
 #' @export
-make_test_control_plot_single <- function(dataset, top_amplitude_limit = 3,right_timepoint_max_limit = 35){
+make_test_control_plot_single <- function(dataset, top_amplitude_limit = 3, right_timepoint_max_limit = 35){
 
   # Use this function for the single plots used for diagnosis.
   test_control_plot <- ggplot(dataset, aes(x = Time, y = normalised_amplitude, color = Pathway))+
@@ -15,10 +15,10 @@ make_test_control_plot_single <- function(dataset, top_amplitude_limit = 3,right
     geom_vline(xintercept = 0, linetype = "dotdash", color = "black", size = 0.5) +
     geom_hline(yintercept = 1, linetype = "solid", color = "black", size = 0.5) +
     scale_x_continuous(name = "Time (min)", limits = c(-10, right_timepoint_max_limit)) +
-    scale_y_continuous(name = "First EPSC Amplitude (norm)", limits = c(-1, top_figure_limit), breaks = seq(-1, top_figure_limit, by = 1)) +
+    scale_y_continuous(name = "First EPSC Amplitude (norm)", limits = c(-1, top_amplitude_limit), breaks = seq(-1, top_amplitude_limit, by = 1)) +
     scale_color_manual(name = "Pathway", values = test_control_colors) +
     theme_blank_background() +
-    geom_text(x = 0, y = top_figure_limit, label = "\u2193", size = 8, color = "black")
+    geom_text(x = 0, y = top_amplitude_limit, label = "\u2193", size = 8, color = "black")
 
   return(test_control_plot)
 }
