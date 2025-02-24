@@ -6,7 +6,7 @@ A library to analyse LTP that has been saved in longformat.
 
 - **Pre-processing and cleaning**: removal of any NA values, checking for outliers and unique cell identification.
 
-- **Ability to save to wide format**: TODO
+- **Ability to save to wide format**: A strangely difficult system to put in place to convert this kind of data back to a wide format is included. There might be an easier way to do this but for now I have hacked something together to make this work.
 
 - **Individual cell analysis**: use of resistance measurements to generate a powerpoint slide deck with one slide per cell for rapid analysis.
 
