@@ -1,6 +1,7 @@
 #' Read LTP CSV files
 #'
-#' Description of what the function does.
+#' A narrow focus read csv function which will import data, correct headings and check if the dataframe contains exactly 15 columns.
+#' Not having the 15 columns will result in issues.
 #'
 #' @param address The string address for the csv file.
 #' @return A dataframe containing the 15 columns.
