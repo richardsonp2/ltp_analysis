@@ -29,11 +29,11 @@ pre_process_datasets <- function(dataset){
   # Tidies up the names of the columns.
 
   current_names <- names(dataset)
-  standardized_names <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num", "Time", "Test", "PPR_test", "Control", "PPR_control", "Rs", "Rin", "DC", "animal_cell_id")
+  standardized_names <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num", "Time", "Test", "PPR_test", "Control", "PPR_Control", "Rs", "Rin", "DC", "animal_cell_id")
   names(dataset) <- standardized_names
 
-  factor_cols <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num")
-  num_cols <- c("Time", "Test", "PPR_test", "Control", "PPR_control", "Rs", "Rin", "DC")
+  factor_cols <- c("Key", "Date", "Sex", "GT", "animal_id", "cell_num", "animal_cell_id")
+  num_cols <- c("Time", "Test", "PPR_test", "Control", "PPR_Control", "Rs", "Rin", "DC")
   dataset[factor_cols] <- lapply(dataset[factor_cols], factor)
   dataset[num_cols] <- lapply(dataset[num_cols], as.numeric)
   return (dataset)

@@ -13,5 +13,6 @@ read_csv_function(address)
 A dataframe containing the 15 columns.
 }
 \description{
-Description of what the function does.
+A narrow focus read csv function which will import data, correct headings and check if the dataframe contains exactly 15 columns.
+Not having the 15 columns will result in issues.
 }

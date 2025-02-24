@@ -21,18 +21,18 @@ A library to analyse LTP that has been saved in longformat.
 
 Install and load the package as follows:
 
-    ```R
-    # Install package
-    if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
-    }
-    remotes::install_github("richardsonp2/ltp_analysis", force = TRUE)
+```R
+# Install package
+if (!requireNamespace("remotes", quietly = TRUE)) {
+install.packages("remotes")
+}
+remotes::install_github("richardsonp2/ltp_analysis", force = TRUE)
 
-    # Load the ltp_analysis package
-    library(ltppackage)
-    # Load officeR package for powerpoint generation below
-    library(officeR)
-    ```
+# Load the ltp_analysis package
+library(ltppackage)
+# Load officeR package for powerpoint generation below
+library(officeR)
+```
 
 Load the long format data.
 
