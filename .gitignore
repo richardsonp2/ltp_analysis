@@ -1,4 +1,6 @@
 .Rproj.user
 datasets
 data
-inst
+inst/archived_data/
+inst/*.csv
+inst/*.ods
